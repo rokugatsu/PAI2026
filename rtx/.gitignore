@@ -1,0 +1,15 @@
+build/
+install/
+log/
+
+*/build/
+*/install/
+*/log/
+
+rosbag2_*/
+*.db3
+*.mcap
+
+*.dat
+
+launch/error.txt

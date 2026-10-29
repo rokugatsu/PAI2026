@@ -1,0 +1,59 @@
+<launch>
+
+  <!-- Left -->
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_left"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera_left/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera_left/image_raw"/>
+
+  </node>
+
+
+  <!-- Front -->
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_front"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera_front/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera_front/image_raw"/>
+
+  </node>
+
+
+  <!-- Right -->
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_right"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera_right/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera_right/image_raw"/>
+
+  </node>
+
+</launch>

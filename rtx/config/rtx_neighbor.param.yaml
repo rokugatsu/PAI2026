@@ -1,0 +1,35 @@
+#waypoint_server_node:
+waypoint_planner_node:
+  ros__parameters:
+    #mode: 0 #navigation
+    #mode: 1 #generate waypoint
+    #mode: 2 #edit waypoint
+    output_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    input_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    mark_file: "/home/june/map/mark.csv" # string
+    Wpt_Change_Radius: 1.5
+    AvoidanceArea_Front: 5.0
+    AvoidanceArea_Back: -0.5
+    AvoidanceArea_Side: 5.0
+    Avoidance_Mergin: 0.4
+    EgoRegionLength: 3.0
+    MinHeight: -0.5
+    ObjectMonitorWigth_cm: 40
+    Wpt_resilience: 0.9
+    AvoidMinDist: 0.1
+    Robo_HalfWidth: 0.325
+    Robo_FarmostFront: 5.0
+
+motion_coordinator_node:
+ ros__parameters:
+    vrefMax: 75.0 #Manual Operation
+    vel_veryHigh: 80.0
+    vel_high: 75.0
+    vel_mid: 50.0
+    vel_low: 40.0
+    vel_veryLow: 30.0
+    vel_lightLow: 20.0
+    vel_extreamLow: 10.0
+    vel_hill: 20.0
+    vel_init: 60.0
+    vel_max: 80.0

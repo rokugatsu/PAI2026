@@ -1,0 +1,13 @@
+<launch>
+    <set_parameter name="use_sim_time" value="true"/>
+
+    <node pkg="recognizer"
+          exec="object_segmentation_node"
+          name="object_segmentation_node"
+          output="screen">
+
+        <env name="PYTORCH_CUDA_ALLOC_CONF"
+             value="expandable_segments:True"/>
+
+    </node>
+</launch>

@@ -1,0 +1,29 @@
+<launch>
+    <set_parameter name="use_sim_time" value="true"/>
+
+    <arg name="cloud_merger_param_file" default="$(find-pkg-share pcl_lab)/config/merger.param.yaml"/>
+    <arg name="cloud_matcher_param_file" default="$(find-pkg-share pcl_lab)/config/matcher.param.yaml"/>
+    <arg name="rtx_param_file" default="$(find-pkg-share rtx)/config/rtx.param.yaml"/>
+
+    <!--node pkg="pcl_lab" exec="cloudViewer" name="cloudViewer" output="screen">  
+        <param from="$(var rtx_param_file)"/>
+    </node-->
+
+    <node pkg="rtx" exec="localizer_node" name="localizer_node" output="screen">  
+        <param from="$(var rtx_param_file)"/>
+        <param name="mode" value="-1" />
+    </node>
+
+    <node pkg="joy" exec="joy_node" name="joy_node" output="screen"/>  
+    
+    <node pkg="rtx" exec="waypoint_planner_node" name="waypoint_planner_node" output="screen"> 
+        <param name="mode" value="2" /> 
+        <param from="$(var rtx_param_file)"/>
+    </node>
+  
+    <!-- rviz2-->
+    <arg name="rviz_config_path" default="$(find-pkg-share rtx)/launch/rtx_viewer.rviz" />  
+    <node pkg="rviz2" exec="rviz2" args="-d $(var rviz_config_path)">
+    </node> 
+    
+</launch>

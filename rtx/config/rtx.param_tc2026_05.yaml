@@ -1,0 +1,298 @@
+#waypoint_server_node:
+/**:
+  ros__parameters:
+    Lidar_height: 0.65
+
+waypoint_planner_node:
+  ros__parameters:
+    #!!! modeはrtx**.launch.xmlから与える
+    
+    #mode: 0 #navigation
+    #mode: 1 #generate waypoint
+    #mode: 2 #edit waypoint
+    #output_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    #input_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    
+    #For TsukubaChallenge2025
+    #output_waypoint_file: "/home/june/map/tsukuba2025/wpt/tsukuba_wpt.csv" # string
+    #input_waypoint_file: "/home/june/map/tsukuba2025/wpt/tsukuba_wpt_2025_v5.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    #mark_file: "/home/june/map/tsukuba2025/map/mark.csv" # string
+    
+    #For Rinkai
+    #output_waypoint_file: "/home/june/map/rinkai/rinkai_wpt2.csv" # string
+    #input_waypoint_file: "/home/june/map/rinkai/rinkai_wpt2.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    #mark_file: "/home/june/map/rinkai/mark.csv" # string
+    
+    #New Map  
+    output_waypoint_file: "/home/june/data/tsukuba2026/waypoint_output.csv" # string
+    input_waypoint_file: "/home/june/data/tsukuba2026/waypoint.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    mark_file: "/home/june/map/tsukuba2025/map/mark.csv" # string
+    
+
+    #Wpt_Change_Radius_Normal: 1.5
+    Wpt_Change_Radius_Normal: 1.5
+    Wpt_Change_Radius_PosePoint: 0.25
+    Wpt_Change_Radius_Curve: 1.0
+    
+    AvoidanceArea_Front: 5.0  #Range for object detection
+    #AvoidanceArea_Front: 2.0  #Range for object detection
+    AvoidanceArea_Back: 0.4  #Range for object detection //251129 tc07
+    
+    AvoidanceArea_Side: 5.0   #Range for object detection
+    AvoidMinDist: 0.01        #Range for object detection
+    #AvoidanceMergin: 0.6   #Width for pass through    
+    #AvoidanceMergin: 0.2   #Width for pass through    #OK
+    #AvoidanceMergin: 0.35   #Width for pass through    #OK
+    AvoidanceMergin: 0.5   #Width for pass through    #OK
+    
+
+    #FreeSpaceWidth: 0.6 #片側半分 
+    FreeSpaceWidth: 0.35 #片側半分 #OK
+    #FreeSpaceWidth: 0.4 #片側半分 #OK
+   
+    
+    #AvoidanceDepthMergin: 0.5
+    AvoidanceDepthMergin: 0.35
+    
+    EgoRegionLength: 1.0
+    #EgoRegionLength: 0.0
+           
+    MinHeight: -0.75    
+    MinHeightFar: -0.5 
+    MinHeightMid: -0.75
+    MinHeightNear: -0.75
+
+    #MinHeight: -0.85    
+    #MinHeightFar: -0.85 
+    #MinHeightMid: -0.85
+    #MinHeightNear: -0.85
+
+
+    #MinHeight: -7.5    
+    #MinHeightFar: -5.0 
+    #MinHeightMid: -5.0
+    #MinHeightNear: -7.5
+
+    ObjectMonitorWidth_cm: 100 #tc07
+    #ObjectMonitorWidth_cm: 40 #tc07
+    
+    #ObjectMonitorWidth_cm: 160 #tc07
+
+    Wpt_resilience: 0.99 #regular
+    
+    #Robo_HalfWidth: 0.4    #Range of minDist 251206 tc09 1428
+    #Robo_HalfWidth: 0.5    #Range of minDist 261004_tc2026_03
+    #Robo_HalfWidth: 0.2    #Range of minDist 261004_tc2026_03
+    Robo_HalfWidth: 0.4    #Range of minDist 261004_tc2026_03
+    
+    #Robo_ClosedFront: 0.21 #fina1  #Range of minDist
+    Robo_ClosedFront: 0.1 #fina1  #Range of minDist
+    Robo_ClosedRear: -0.5 #fina1  #Range of minDist
+    #Robo_FarmostFront: 5.0  #Range of minDist
+    Robo_FarmostFront: 5.0  #Range of minDist
+    
+    #Robo_FarmostFront: 10.0  #Range of minDist
+    
+    Robo_Height : 0.1
+
+    VisRoboWidth: 0.65
+    VisRoboLength: 0.85
+    VisRoboHeight: 1.0
+    VisRoboCenterLength: -0.25
+    VisRoboCenterHeight: -0.65
+
+motion_coordinator_node:
+ ros__parameters:
+    vrefMax: 75.0 #Manual Operation
+    vel_veryHigh: 75.0
+    vel_high: 75.0
+    vel_mid: 50.0
+    vel_low: 40.0
+    vel_veryLow: 30.0
+    vel_lightLow: 20.0
+    vel_extreamLow: 10.0
+    vel_hill: 20.0
+    vel_init: 60.0
+    vel_max: 75.0
+    vel_step: 1.0
+    stop_radius: 0.75 #tc07
+    Dist_stopQueue: 0.5
+    DistTime: 6.0
+    MaxCurrent_mA: 8000
+    
+    Dist_Default_Front: 1.0
+    #Dist_Default_Front: 2.0 #261004
+    
+    Dist_Critical_Front: 0.5
+    #Dist_Critical_Front: 1.5
+    
+    #Dist_Avoid_Reverse: 0.75
+    Dist_Avoid_Reverse: 1.5
+
+    ForwardObject_PoseCount: 20
+    Reverse_Count_Default: 20
+    Pedestrian_StopDist: 1.2
+    SpinThreshold: 45.0
+     
+localizer_node:    
+  ros__parameters:
+    #use_sim_time: true
+
+    #For Tsukuba Challenge2025
+    #pointcloud_map: "/home/june/map/tsukuba2025/map/GlobalMap_2025_v4.pcd"
+    
+    #For Tsukuba Challenge2026
+    pointcloud_map: "/home/june/data/tsukuba2026/global_map.pcd"
+    AreaMap_pgm: "/home/june/data/tsukuba2026/global_drivable_area_map.pgm"
+    AreaMap_yaml: "/home/june/data/tsukuba2026/global_drivable_area_map.yaml"
+    trim_area_range: 80.0
+    z_map_offset: -0.65
+    #z_map_offset: 0.0
+    save_pcd_dir: "/home/june/data/tsukuba2026/log"
+    #----
+    
+    #for Rinkai-Area test ---
+    #pointcloud_map: "/home/june/map/rinkai/Aomi-South_VGF02.pcd" 
+    #x_map_offset: -5136.25
+    #y_map_offset: -42340.6   
+    #z_map_offset: 12.0
+    #map_scale: 1.0 #[m]
+    #trim_area_range: 60.0
+    #save_pcd_dir: "/home/june/map/rinkai/"
+    #----
+    
+    input_pointcloud: "/merged_pointcloud" # string
+    #input_pointcloud: "/velodyne_points"
+    input_odom: "/odom_raw"
+    input_imu: "/imu/data_raw"
+    threshold_align_fitness_score: 1.0
+    
+    threshold_dist_save_pcd: 10.0
+    SumAlign_fitnessScore: 50.0
+
+    leaf_size: 0.5
+    matching_leaf_size: 0.25 #0.25 #0.25 #3.0 #0.75 #0.5
+    #threshold_score_align_with_map: 5.0 #!!! NG
+    threshold_score_align_with_map: 10.0 #!!! NG
+    threshold_adjust_pose: 5.0 #-2.2
+    threshold_EKF_align_fitness_score: 0.5
+    threshold_mh_dist : 3.0 #3.0 
+    GICP_TransformationEpsilon: 0.1
+    GICP_EuclideanFitnessEpsilon: 0.1
+    GICP_MaximumIterations: 50 #100 #30 
+
+    NDT_OMP_TransformationEpsilon: 0.1
+    NDT_OMP_StepSize: 1.0 #1.0 #1.0 #0.75
+    #NDT_OMP_Resolution: 5.0 #!!!
+    NDT_OMP_Resolution: 1.0 #!!!
+    #NDT_OMP_Resolution: 0.5099 #!!!0.5以上の必要
+    
+    NDT_OMP_Max_Correspondence_Dist: 5.0 #2.5 #5.0    
+    NDT_OMP_EuclideanFitnessEpsilon: 0.1 #0.5 #0.1
+    NDT_OMP_MaximumIterations: 300
+    RADIUS_SEARCH_GROUND: 1.5
+   
+    EKF_COV_SYSTEM_NOISE_SXX: 0.0001
+    EKF_COV_SYSTEM_NOISE_SYY: 0.0001
+    #EKF_COV_SYSTEM_NOISE_SYAWYAW: 0.0001
+    EKF_COV_SYSTEM_NOISE_SYAWYAW: 0.01 #まあまあ
+    #EKF_COV_SYSTEM_NOISE_SYAWYAW: 0.05 # 0,01より揺れが大きい
+ 
+    #EKF_COV_SYSTEM_NOISE_SXX: 0.001
+    #EKF_COV_SYSTEM_NOISE_SYY: 0.001
+    #EKF_COV_SYSTEM_NOISE_SYAWYAW: 0.001
+ 
+    EKF_COV_SENSOR_NOISE_X: 0.3
+    EKF_COV_SENSOR_NOISE_Y: 0.3
+
+    #System Noize 
+    EKF_WNOISE_X: 0.05 #0.05 
+    EKF_WNOISE_Y: 0.05 #0.05
+    EKF_WNOISE_YAW: 0.5 #0.05
+
+    #System Noize 
+    EKF_VNOISE_X: 0.64
+    EKF_VNOISE_Y: 0.64
+    #EKF_VNOISE_YAW: 0.36
+    EKF_VNOISE_YAW: 0.9
+
+    #GNSS
+    InitLatitude: 36.0828676000000002
+    initLongitude: 140.0769872999999848
+
+    #InitianPosition
+    Xinit: 0.0
+    Yinit: 0.0
+    YawInit: 0.0
+    #YawInit: 3.141592
+
+loadsurface_detector_node:
+  ros__parameters:
+    # ---- トピック ----
+    input_topic: "/camera/depth/points"
+    ground_topic: "ground/points"            # 路面（走行可能領域）の点群
+    obstacle_topic: "lowobstacles/points"        # 路面以外（障害物候補）の点群
+    hull_topic: "drivable_area/polygon"       # 路面点群の凸包（走行可能領域の境界）
+    publish_ground: true
+    publish_obstacles: true
+    publish_drivable_polygon: true
+
+    # ---- 座標系 ----
+    # 路面は base_frame_id の XY 平面付近・Z-up であることを前提とする（REP-105準拠）。
+    # 入力点群のフレームが異なる場合は TF (sensor_frame -> base_frame_id) で変換してから処理する。
+    base_frame_id: "base_link"
+    tf_timeout_sec: 0.2
+
+    # ---- ロボット前方 ROI による事前絞り込み ----
+    # base_frame_id（REP-103準拠: X=前方, Y=左, Z=上）での範囲 [m]。
+    # 既定は「ロボット直前(0m)〜前方5m、左右3m、高さ±0.3m」。
+    # 壁・天井・遠方や側方の誤検出対策、および処理の高速化を兼ねる。
+    use_roi_filter: true
+    min_x: 0.0    # 前方（ロボット直前から）
+    max_x: 10.0    # 前方5m程度まで
+    min_y: -3.0   # 右
+    max_y: 3.0    # 左
+    min_z: -1.5
+    max_z: 0.0 #-0.75 #地面の高さ
+    #max_z: -0.8 #-0.75 #地面の高さ
+    #min_z: -15.0
+    #max_z: 0.0 #-0.75 #地面の高さ
+
+    # ---- 前処理（ダウンサンプリング） ----
+    use_voxel_filter: true
+    voxel_leaf_size: 0.05   # [m]
+
+    # ---- RANSAC 平面抽出 ----
+    distance_threshold: 0.03   # [m] 路面とみなす距離のしきい値
+    max_iterations: 200
+    optimize_coefficients: true
+    min_plane_points: 100      # これ未満の inlier 数なら「路面なし」扱い
+
+    # ---- 法線方向の拘束（路面はほぼ水平＝base_frame_id の Z 軸に垂直、という前提） ----
+    use_perpendicular_constraint: true
+    axis_x: 0.0
+    axis_y: 0.0
+    axis_z: 1.0
+    eps_angle_deg: 15.0   # 軸からの許容角度（傾斜・凹凸のある路面向けに少し緩め）
+
+    # ---- 障害物検知の対象範囲（路面 ROI とは独立に設定可能） ----
+    # base_frame_id（X=前方, Y=左, Z=上）での範囲 [m]。既定は「ロボット手前〜前方2m、左右1.5m、
+    # 高さ-0.3〜1.5m」。ロボットの制動距離・車幅・想定する障害物の高さに合わせて調整する。
+    # 範囲内の点は「検出した路面平面からの距離」で障害物かどうかを判定する
+    # （obstacle_distance_threshold より離れていれば障害物候補）。
+    use_obstacle_roi_filter: true
+    obstacle_min_x: 0.1    # 前方（ロボット直前から）
+    obstacle_max_x: 2.0 #1.5    # 前方1.5m程度まで（近距離の障害物検知向け）
+    obstacle_min_y: -3.0 #-1.5   # 右
+    obstacle_max_y: 3.0    # 左
+    obstacle_min_z: -0.75
+    #obstacle_max_z: -0.7    # 路面 ROI より高く取り、背の高い障害物も拾えるようにする
+    obstacle_max_z: 0.0    # 路面 ROI より高く取り、背の高い障害物も拾えるようにする
+    
+    obstacle_distance_threshold: 0.05   # [m] 路面平面からこれ以上離れていれば障害物とみなす
+
+cloudViewer:
+  ros__parameters:
+    pointcloud_map: "/home/june/data/tsukuba2026/global_map.pcd"
+    AreaMap_pgm: "/home/june/data/tsukuba2026/global_drivable_area_map.pgm"
+    AreaMap_yaml: "/home/june/data/tsukuba2026/global_drivable_area_map.yaml"

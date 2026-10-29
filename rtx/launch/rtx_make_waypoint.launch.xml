@@ -1,0 +1,54 @@
+<launch>
+    <set_parameter name="use_sim_time" value="false"/>
+
+    <arg name="cloud_merger_param_file" default="$(find-pkg-share pcl_lab)/config/merger.param.yaml"/>
+    <arg name="cloud_matcher_param_file" default="$(find-pkg-share pcl_lab)/config/matcher.param.yaml"/>
+    <arg name="rtx_param_file" default="$(find-pkg-share rtx)/config/rtx.param.yaml"/>
+
+    <node pkg="pcl_lab" exec="cloudMerger" name="cloudMerger" output="screen">  
+        <param from="$(var cloud_merger_param_file)"/>
+    </node>
+    
+    <node pkg="pointcloud_to_laserscan" exec="laserscan_to_pointcloud_node" name="laserscan_to_pointcloud" output="screen">  
+        <remap from="scan_in" to="/scan_front"/>
+        <remap from="cloud" to="/cloud_scan_front"/>
+        <param name="target_frame" value="urg_front"/>
+        <param name="transform_tolerance" value="0.01"/>
+    </node>
+
+    <node pkg="pointcloud_to_laserscan" exec="laserscan_to_pointcloud_node" name="laserscan_to_pointcloud" output="screen">  
+        <remap from="scan_in" to="/scan_rear"/>
+        <remap from="cloud" to="/cloud_scan_rear"/>
+        <param name="target_frame" value="urg_rear"/>
+        <param name="transform_tolerance" value="0.01"/>
+    </node>
+
+    <node pkg="rtx" exec="localizer_node" name="localizer_node" output="screen">  
+        <param from="$(var rtx_param_file)"/>
+    </node>
+
+    <node pkg="rtx" exec="waypoint_planner_node" name="waypoint_planner_node" output="screen"> 
+        <param name="mode" value="1" /> 
+        <param from="$(var rtx_param_file)"/>
+    </node>
+
+    <!--node pkg="rtx" exec="motion_coordinator_node" name="motion_coordinator_node" output="screen">
+        <param name="runMode" value="0" />  
+        <param from="$(var rtx_param_file)"/>
+    </node-->
+
+    <!--node pkg="rtx" exec="rpi_udp_node" name="rpi_udp_node" output="screen"/-->
+    
+    <!-- Static TF from base link to laser -->
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="cloud_to_base_link" args="0 0 0 0 0 0 /cloud_matching /base_link" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_imu" args="0 0 0 0 0 0 /base_link /imu" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_urg_front" args="0.2 0 -0.56 0 0 0 /base_link /urg_front" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_urg_rear" args="-0.3 0 -0.56 3.141592654 0 0 /base_link /urg_rear" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_velodyne" args="-0.05 0 0.0 0 0 0 /base_link /velodyne" />
+  
+    <!-- rviz2-->
+    <arg name="rviz_config_path" default="$(find-pkg-share rtx)/launch/rtx.rviz" />  
+    <node pkg="rviz2" exec="rviz2" args="-d $(var rviz_config_path)">
+    </node> 
+    
+</launch>

@@ -1,0 +1,12 @@
+<launch>
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_node_exe" output="screen"/>
+    <!--node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_node_exe" output="screen"-->
+
+
+    <node pkg="recognizer" exec="recognizer_node" name="recognizer_node" output="screen">
+        <!--param name="camera_topic" value="/camera/image_raw"/>
+        <param name="model_path" value="/models/vision_model.onnx"/>
+        <param name="confidence_threshold" value="0.5"/-->
+    </node>
+
+</launch>

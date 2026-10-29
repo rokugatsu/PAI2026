@@ -1,0 +1,169 @@
+#waypoint_server_node:
+waypoint_planner_node:
+  ros__parameters:
+    #!!! modeはrtx**.launch.xmlから与える
+    
+    #mode: 0 #navigation
+    #mode: 1 #generate waypoint
+    #mode: 2 #edit waypoint
+    #output_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    #input_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    
+    #For TsukubaChallenge2025
+    output_waypoint_file: "/home/june/map/tsukuba2025/wpt/tsukuba_wpt.csv" # string
+    input_waypoint_file: "/home/june/map/tsukuba2025/wpt/tsukuba_wpt_2025_v5.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    mark_file: "/home/june/map/tsukuba2025/map/mark.csv" # string
+    
+    #For Rinkai
+    #output_waypoint_file: "/home/june/map/rinkai/rinkai_wpt.csv" # string
+    #input_waypoint_file: "/home/june/map/rinkai/rinkai_wpt.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    #mark_file: "/home/june/map/rinkai/map/mark.csv" # string
+    
+    Wpt_Change_Radius_Normal: 1.5
+    Wpt_Change_Radius_PosePoint: 0.25
+    
+    AvoidanceArea_Front: 5.0  #Range for object detection
+    #AvoidanceArea_Front: 8.0  #Range for object detection
+    #AvoidanceArea_Front: 10.0  #Range for object detection
+    #AvoidanceArea_Front: 20.0  #Range for object detection
+    
+    #AvoidanceArea_Back: -0.5  #Range for object detection
+    
+    #AvoidanceArea_Back: 0.0  #Range for object detection
+    
+    
+    #AvoidanceArea_Back: 0.2  #Range for object detection
+    AvoidanceArea_Back: 0.4  #Range for object detection //251129 tc07
+    
+    AvoidanceArea_Side: 5.0   #Range for object detection
+    #AvoidanceArea_Side: 10.0   #Range for object detection
+    AvoidMinDist: 0.01        #Range for object detection
+    #AvoidanceArea_Side: 5.0
+    
+    #AvoidanceMergin: 0.5   #Width for pass through
+    #AvoidanceMergin: 0.6   #Width for pass through
+    
+    #Avoidance_Mergin: 0.4
+    #Avoidance_Mergin: 0.5 #tc06
+    #Avoidance_Mergin: 0.6 #tc07
+    #Avoidance_Mergin: 0.7   #Width for pass through
+    #Avoidance_Mergin: 0.4   #Width for pass through
+    #AvoidanceMergin: 0.8   #Width for pass through
+    #AvoidanceMergin: 1.0   #Width for pass through
+    #AvoidanceMergin: 0.5   #Width for pass through
+    
+    #For Lane Change
+    AvoidanceMergin: 0.6   #Width for pass through
+    
+    #For Free space exploration
+    FreeSpaceWidth: 0.6 #片側半分 
+    
+    AvoidanceDepthMergin: 0.5
+
+    #FreeSpaceWidth: 0.35 
+    #FreeSpaceWidth: 0.4 //251108
+    
+    #Avoidance_Mergin: 0.8  
+    #EgoRegionLength: 3.0 
+    #EgoRegionLength: 5.0 
+    
+    #EgoRegionLength: 2.0 
+    #EgoRegionLength: 1.5 
+
+    EgoRegionLength: 1.0 
+      
+    #MinHeight: -0.5
+    MinHeight: -0.75
+    
+    #MinHeightFar: -0.25
+    MinHeightFar: -0.5 
+    MinHeightMid: -0.5
+    #MinHeightMid: -0.75
+    MinHeightNear: -0.75
+
+    #MinHeightFar: -0.75
+    #MinHeightMid: -0.75
+    #MinHeightNear: -0.75
+
+    #ObjectMonitorWidth_cm: 40 #tc07
+    ObjectMonitorWidth_cm: 80 #tc07
+    #ObjectMonitorWidth_cm: 20 #tc07
+    #ObjectMonitorWidth_cm: 40 #tc07
+    #ObjectMonitorWidth_cm: 30 #tc07
+    #ObjectMonitorWidth_cm: 20 #tc07
+    
+    #ObjectMonitorWidth_cm: 60
+    #ObjectMonitorWidth_cm: 80 #Range for obstacle detection
+    #ObjectMonitorWidth_cm: 160 #Range for obstacle detection
+    
+    #Wpt_resilience: 0.9 #tc07
+    #Wpt_resilience: 0.99
+    #Wpt_resilience: 0.999
+    #Wpt_resilience: 0.97 #regular
+    Wpt_resilience: 0.99 #regular
+    
+    #Wpt_resilience: 0.92
+    #Wpt_KeepTime: 20
+    #Wpt_KeepTime: 10
+    #Wpt_KeepTime: 40 #15
+    
+    #AvoidMinDist: 0.1
+    #AvoidMinDist: 0.01
+    #Robo_HalfWidth: 0.325
+    #Robo_HalfWidth: 0.35    #Range of minDist
+    #Robo_HalfWidth: 0.4    #Range of minDist
+    
+    #Robo_HalfWidth: 0.6    #Range of minDist 251129 tc07
+    Robo_HalfWidth: 0.5    #Range of minDist 251205 tc08
+    
+    #Robo_HalfWidth: 0.325    #Range of minDist
+    #Robo_HalfWidth: 0.35    #Range of minDist
+    #Robo_HalfWidth: 0.4    #Range of minDist
+    #Robo_HalfWidth: 0.5    #Range of minDist
+    
+    #Robo_ClosedFront: 0.0 #fina1  #Range of minDist
+    Robo_ClosedFront: -0.5 #fina1  #Range of minDist
+    Robo_FarmostFront: 5.0  #Range of minDist
+    #Robo_FarmostFront: 10.0  #Range of minDist
+    #Robo_FarmostFront: 20.0  #Range of minDist
+    
+    #Robo_Height : 0.3
+    Robo_Height : 0.1
+
+    VisRoboWidth: 0.65
+    VisRoboLength: 0.85
+    VisRoboHeight: 1.0
+    VisRoboCenterLength: -0.25
+    VisRoboCenterHeight: -0.65
+
+
+motion_coordinator_node:
+ ros__parameters:
+    #vrefMax: 60.0 #Manual Operation
+    vrefMax: 75.0 #Manual Operation
+    vel_veryHigh: 75.0
+    vel_high: 75.0
+    vel_mid: 50.0
+    vel_low: 40.0
+    vel_veryLow: 30.0
+    vel_lightLow: 20.0
+    vel_extreamLow: 10.0
+    vel_hill: 20.0
+    vel_init: 60.0
+    vel_max: 75.0
+    #vel_step: 0.5 #tc07
+    vel_step: 1.0
+    #stop_radius: 0.5 #tc07
+    stop_radius: 0.75 #tc07
+    Dist_stopQueue: 0.5
+    #DistTime: 3.0
+    DistTime: 6.0
+    MaxCurrent_mA: 8000
+    Dist_Default_Front: 1.0
+    Dist_Critical_Front: 0.5
+    Dist_Avoid_Reverse: 0.75
+    ForwardObject_PoseCount: 20
+    Reverse_Count_Default: 20
+    Pedestrian_StopDist: 1.2
+     
+    

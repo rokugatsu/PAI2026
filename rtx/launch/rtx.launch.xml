@@ -1,0 +1,104 @@
+<launch>
+    <!--set_parameter name="use_sim_time" value="true"/-->
+    <!--set_parameter name="use_sim_time" value="false"/-->
+    <arg name="use_sim_time" default="false"/>
+    <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
+
+    <arg name="cloud_merger_param_file" default="$(find-pkg-share pcl_lab)/config/merger.param.yaml"/>
+    <arg name="cloud_matcher_param_file" default="$(find-pkg-share pcl_lab)/config/matcher.param.yaml"/>
+    <arg name="rtx_param_file" default="$(find-pkg-share rtx)/config/rtx.param.yaml"/>
+
+    <node pkg="pcl_lab" exec="cloudMerger" name="cloudMerger" output="screen">  
+        <param from="$(var cloud_merger_param_file)"/>
+    </node>
+    
+    <node pkg="pointcloud_to_laserscan" exec="laserscan_to_pointcloud_node" name="laserscan_to_pointcloud" output="screen">  
+        <remap from="scan_in" to="/scan_front"/>
+        <remap from="cloud" to="/cloud_scan_front"/>
+        <param name="target_frame" value="urg_front"/>
+        <param name="transform_tolerance" value="0.01"/>
+    </node>
+
+    <node pkg="pointcloud_to_laserscan" exec="laserscan_to_pointcloud_node" name="laserscan_to_pointcloud" output="screen">  
+        <remap from="scan_in" to="/scan_rear"/>
+        <remap from="cloud" to="/cloud_scan_rear"/>
+        <param name="target_frame" value="urg_rear"/>
+        <param name="transform_tolerance" value="0.01"/>
+    </node>
+
+    <node pkg="depth_image_proc" exec="point_cloud_xyz_node" name="depth_to_pointcloud" output="screen">
+        <remap from="image_rect" to="/camera/camera/aligned_depth_to_color/image_raw"/>
+        <remap from="camera_info" to="/camera/camera/aligned_depth_to_color/camera_info"/>
+        <remap from="points" to="/camera/depth/points"/>
+    </node>
+
+    <!-- rviz2表示専用: /camera/depth/pointsをmap座標系に変換 -->
+    <node pkg="rtx" exec="pointcloud_map_transformer_node" name="pointcloud_map_transformer" output="screen">
+       <param name="target_frame" value="map"/>
+       <remap from="input" to="/camera/depth/points"/>
+       <remap from="output" to="/camera/depth/points_map"/>
+    </node>
+    <!-- rviz2表示専用: ground/pointsをmap座標系に変換 -->
+    <node pkg="rtx" exec="pointcloud_map_transformer_node" name="ground_map_transformer" output="screen">
+        <param name="target_frame" value="map"/>
+        <remap from="input" to="/ground/points"/>
+        <remap from="output" to="/ground/points_map"/>
+    </node>
+
+    <!-- 同様にlowobstacles/pointsも表示しているなら -->
+    <node pkg="rtx" exec="pointcloud_map_transformer_node" name="lowobstacles_map_transformer" output="screen">
+        <param name="target_frame" value="map"/>
+        <remap from="input" to="/lowobstacles/points"/>
+        <remap from="output" to="/lowobstacles/points_map"/>
+    </node>
+    
+    <!-- 同様に/drivable_area/polygonも表示しているなら -->
+    <node pkg="rtx" exec="polygon_map_transformer_node" name="drivable_area_map_transformer" output="screen">
+        <param name="target_frame" value="map"/>
+        <remap from="input" to="/drivable_area/polygon"/>
+        <remap from="output" to="/drivable_area/polygon_map"/>
+    </node>
+
+
+    <node pkg="rtx" exec="localizer_node" name="localizer_node">  
+        <param from="$(var rtx_param_file)"/>
+    </node>
+ 
+    <node pkg="rtx" exec="waypoint_planner_node" name="waypoint_planner_node" output="screen" > 
+        <param name="mode" value="0" /> 
+        <param from="$(var rtx_param_file)"/>
+    </node>
+
+    <node pkg="rtx" exec="motion_coordinator_node" name="motion_coordinator_node" >
+        <param name="runMode" value="0" />  
+        <param from="$(var rtx_param_file)"/>
+    </node>
+
+    <!--node pkg="rtx" exec="loadsurface_detector_node" name="loadsurface_detector_node" output="screen"-->
+        <!--param from="$(var rtx_param_file)"/-->
+        <!--param name="input_topic" value="$(var input_topic)"/-->
+        <!--param name="base_frame_id" value="$(var base_frame_id)"/-->
+    <!--/node -->
+
+
+    <!--node pkg="rtx" exec="rpi_udp_node" name="rpi_udp_node" output="screen"/-->
+
+    <node pkg="joy" exec="joy_node" name="joy_node" output="screen"/>  
+    
+    <!-- Static TF from base link to laser -->
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="cloud_to_base_link" args="0 0 0 0 0 0 /cloud_matching /base_link" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_imu" args="0 0 0 0 0 0 /base_link /imu" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_urg_front" args="0.2 0 -0.56 0 0 0 /base_link /urg_front" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_urg_rear" args="-0.3 0 -0.56 3.141592654 0 0 /base_link /urg_rear" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_velodyne" args="-0.05 0 0.65 0 0 0 /base_link /velodyne" />
+    <!--node pkg="tf2_ros" exec="static_transform_publisher" name="base_to_camera_tf" args="0.20 0.0 -0.53  -1.5708 0 -1.5708 base_link camera_depth_optical_frame" output="screen"/-->
+    <!--node pkg="tf2_ros" exec="static_transform_publisher" name="base_to_camera_tf" args="0.20 0.0 -0.53  -1.5708 0 -1.5708 base_link camera_color_optical_frame" output="screen"/-->
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_to_camera_tf" args="0.20 0.0 -0.53  0 0 0 base_link camera_link" output="screen"/>
+
+    <!-- rviz2-->
+    <!-- arg name="rviz_config_path" default="$(find-pkg-share pcl_lab)/launch/rtx.rviz" /-->  
+    <arg name="rviz_config_path" default="$(find-pkg-share rtx)/launch/rtx.rviz" />  
+    <node pkg="rviz2" exec="rviz2" args="-d $(var rviz_config_path)">
+    </node> 
+    
+</launch>

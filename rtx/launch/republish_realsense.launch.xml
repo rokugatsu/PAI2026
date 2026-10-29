@@ -1,0 +1,45 @@
+<launch>
+
+  <!-- =========================================================
+       RealSense D435i
+       CompressedImage -> Image
+       ========================================================= -->
+
+  <!-- Color Image -->
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_color"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera/camera/color/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera/camera/color/image_raw"/>
+
+  </node>
+
+
+  <!-- Aligned Depth Image -->
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_aligned_depth"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera/camera/aligned_depth_to_color/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera/camera/aligned_depth_to_color/image_raw"/>
+
+  </node>
+
+</launch>

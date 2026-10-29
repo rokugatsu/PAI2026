@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="rtx" exec="rpi_udp_node" name="rpi_udp_node" output="screen"/>
+</launch>

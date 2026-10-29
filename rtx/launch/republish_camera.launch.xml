@@ -1,0 +1,57 @@
+<launch>
+
+  <!-- =========================================================
+       RealSense D435i
+       CompressedImage -> Image
+       ========================================================= -->
+
+  <!-- Color Image -->
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_color"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera_front/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera_front/image_raw"/>
+  </node>
+
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_color"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera_left/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera_left/image_raw"/>
+  </node>
+
+  <node
+    pkg="image_transport"
+    exec="republish"
+    name="republish_color"
+    args="compressed raw"
+    output="screen">
+
+    <remap
+      from="in/compressed"
+      to="/camera_right/image_raw/compressed"/>
+
+    <remap
+      from="out"
+      to="/camera_right/image_raw"/>
+  </node>
+
+</launch>

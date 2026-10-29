@@ -1,0 +1,46 @@
+<launch>
+    <!--node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_node_exe"/-->
+    <!--node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_node_exe" output="screen"/-->
+    <!-- Front camera : AONI -->
+    
+      <!-- =====================================================
+       Configure both Logitech C920 cameras
+       ===================================================== -->
+
+    <executable cmd="/home/june/ros2_ws/src/recognizer/recognizer/scripts/c920_setup.sh" output="screen"/>
+
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_front" namespace="camera_front">
+        <param name="video_device" value="/dev/camera_front"/>
+        <param name="image_width" value="640"/>
+        <param name="image_height" value="480"/>
+        <param name="framerate" value="15.0"/>
+        <param name="pixel_format" value="mjpeg2rgb"/>
+        <param name="io_method" value="mmap"/>
+    </node>
+
+
+    <!-- Left camera : -->
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_left" namespace="camera_left">
+        <param name="video_device" value="/dev/camera_left"/>
+        <param name="image_width" value="640"/>
+        <param name="image_height" value="480"/>
+        <param name="framerate" value="15.0"/>
+        <param name="pixel_format" value="mjpeg2rgb"/>
+        <param name="io_method" value="mmap"/>
+    </node>
+
+    <!-- Right camera :  -->
+    <node pkg="usb_cam" exec="usb_cam_node_exe" name="usb_cam_right" namespace="camera_right">
+        <param name="video_device" value="/dev/camera_right"/>
+        <param name="image_width" value="640"/>
+        <param name="image_height" value="480"/>
+        <param name="framerate" value="15.0"/>
+        <param name="pixel_format" value="mjpeg2rgb"/>
+        <param name="io_method" value="mmap"/>
+    </node>
+
+    <node pkg="recognizer" exec="object_segmentation_node" name="object_segmentation_node" output="screen">
+    <env name="PYTORCH_CUDA_ALLOC_CONF" value="expandable_segments:True"/>
+    </node>
+
+</launch>

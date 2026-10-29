@@ -1,0 +1,21 @@
+# ROS2 build artifacts
+build/
+install/
+log/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# YOLO model files
+*.pt
+
+# ROS bag
+rosbag2_*/
+*.db3
+*.mcap
+
+# Temporary / backup files
+*~
+*.swp
+*.swo

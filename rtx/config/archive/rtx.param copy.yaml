@@ -1,0 +1,176 @@
+#waypoint_server_node:
+/**:
+  ros__parameters:
+    Lidar_height: 0.65
+
+waypoint_planner_node:
+  ros__parameters:
+    #!!! modeはrtx**.launch.xmlから与える
+    
+    #mode: 0 #navigation
+    #mode: 1 #generate waypoint
+    #mode: 2 #edit waypoint
+    #output_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    #input_waypoint_file: "/home/june/map/neighbor_wpt.csv" # string
+    
+    #For TsukubaChallenge2025
+    #output_waypoint_file: "/home/june/map/tsukuba2025/wpt/tsukuba_wpt.csv" # string
+    #input_waypoint_file: "/home/june/map/tsukuba2025/wpt/tsukuba_wpt_2025_v5.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    #mark_file: "/home/june/map/tsukuba2025/map/mark.csv" # string
+    
+    #For Rinkai
+    #output_waypoint_file: "/home/june/map/rinkai/rinkai_wpt2.csv" # string
+    #input_waypoint_file: "/home/june/map/rinkai/rinkai_wpt2.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    #mark_file: "/home/june/map/rinkai/mark.csv" # string
+    
+    #New Map  
+    output_waypoint_file: "/home/june/data/test_pcd_all2/waypoint.csv" # string
+    input_waypoint_file: "/home/june/data/test_pcd_all2/waypoint_original.csv" # tsukuba_wpt_241023_241026_1233.csvstring
+    mark_file: "/home/june/map/tsukuba2025/map/mark.csv" # string
+    
+
+    Wpt_Change_Radius_Normal: 1.5
+    Wpt_Change_Radius_PosePoint: 0.25
+    
+    AvoidanceArea_Front: 5.0  #Range for object detection
+    AvoidanceArea_Back: 0.4  #Range for object detection //251129 tc07
+    
+    AvoidanceArea_Side: 5.0   #Range for object detection
+    AvoidMinDist: 0.01        #Range for object detection
+    AvoidanceMergin: 0.6   #Width for pass through    
+    FreeSpaceWidth: 0.6 #片側半分 
+   
+    AvoidanceDepthMergin: 0.5
+
+    EgoRegionLength: 1.0       
+    MinHeight: -0.75    
+    MinHeightFar: -0.5 
+    MinHeightMid: -0.5
+    MinHeightNear: -0.75
+
+    ObjectMonitorWidth_cm: 80 #tc07
+    Wpt_resilience: 0.99 #regular
+    
+    Robo_HalfWidth: 0.4    #Range of minDist 251206 tc09 1428
+    
+    Robo_ClosedFront: 0.21 #fina1  #Range of minDist
+    Robo_ClosedRear: -0.5 #fina1  #Range of minDist
+    Robo_FarmostFront: 5.0  #Range of minDist
+    Robo_Height : 0.1
+
+    VisRoboWidth: 0.65
+    VisRoboLength: 0.85
+    VisRoboHeight: 1.0
+    VisRoboCenterLength: -0.25
+    VisRoboCenterHeight: -0.65
+
+motion_coordinator_node:
+ ros__parameters:
+    vrefMax: 75.0 #Manual Operation
+    vel_veryHigh: 75.0
+    vel_high: 75.0
+    vel_mid: 50.0
+    vel_low: 40.0
+    vel_veryLow: 30.0
+    vel_lightLow: 20.0
+    vel_extreamLow: 10.0
+    vel_hill: 20.0
+    vel_init: 60.0
+    vel_max: 75.0
+    vel_step: 1.0
+    stop_radius: 0.75 #tc07
+    Dist_stopQueue: 0.5
+    DistTime: 6.0
+    MaxCurrent_mA: 8000
+    Dist_Default_Front: 1.0
+    Dist_Critical_Front: 0.5
+    Dist_Avoid_Reverse: 0.75
+    ForwardObject_PoseCount: 20
+    Reverse_Count_Default: 20
+    Pedestrian_StopDist: 1.2
+     
+localizer_node:    
+  ros__parameters:
+    #use_sim_time: true
+
+    #For Tsukuba Challenge2025
+    #pointcloud_map: "/home/june/map/tsukuba2025/map/GlobalMap_2025_v4.pcd"
+    pointcloud_map: "/home/june/data/test_pcd_all2/global_map.pcd"
+    AreaMap_pgm: "/home/june/data/test_pcd_all2/global_drivable_area_map_updated.pgm"
+    AreaMap_yaml: "/home/june/data/test_pcd_all2/global_drivable_area_map_updated.yaml"
+    
+    trim_area_range: 80.0
+    z_map_offset: -0.65
+    save_pcd_dir: "/home/june/map/tsukuba2025/map/log/"
+    #----
+    
+    #for Rinkai-Area test ---
+    #pointcloud_map: "/home/june/map/rinkai/Aomi-South_VGF02.pcd" 
+    #x_map_offset: -5136.25
+    #y_map_offset: -42340.6   
+    #z_map_offset: 12.0
+    #map_scale: 1.0 #[m]
+    #trim_area_range: 60.0
+    #save_pcd_dir: "/home/june/map/rinkai/"
+    #----
+    
+    input_pointcloud: "/merged_pointcloud" # string
+    input_odom: "/odom_raw"
+    input_imu: "/imu/data_raw"
+    threshold_align_fitness_score: 1.0
+    
+    threshold_dist_save_pcd: 10.0
+    SumAlign_fitnessScore: 50.0
+
+    leaf_size: 0.5
+    matching_leaf_size: 0.25 #0.25 #0.25 #3.0 #0.75 #0.5
+    #threshold_score_align_with_map: 5.0 #!!! NG
+    threshold_score_align_with_map: 10.0 #!!! NG
+    threshold_adjust_pose: 5.0 #-2.2
+    threshold_EKF_align_fitness_score: 0.5
+    threshold_mh_dist : 3.0 #3.0 
+    GICP_TransformationEpsilon: 0.1
+    GICP_EuclideanFitnessEpsilon: 0.1
+    GICP_MaximumIterations: 50 #100 #30 
+
+    NDT_OMP_TransformationEpsilon: 0.1
+    NDT_OMP_StepSize: 1.0 #1.0 #1.0 #0.75
+    #NDT_OMP_Resolution: 5.0 #!!!
+    NDT_OMP_Resolution: 1.0 #!!!
+    #NDT_OMP_Resolution: 0.5099 #!!!0.5以上の必要
+    
+    NDT_OMP_Max_Correspondence_Dist: 5.0 #2.5 #5.0    
+    NDT_OMP_EuclideanFitnessEpsilon: 0.1 #0.5 #0.1
+    NDT_OMP_MaximumIterations: 300
+    RADIUS_SEARCH_GROUND: 1.5
+   
+    EKF_COV_SYSTEM_NOISE_SXX: 0.0001
+    EKF_COV_SYSTEM_NOISE_SYY: 0.0001
+    EKF_COV_SYSTEM_NOISE_SYAWYAW: 0.0001
+ 
+    #EKF_COV_SYSTEM_NOISE_SXX: 0.001
+    #EKF_COV_SYSTEM_NOISE_SYY: 0.001
+    #EKF_COV_SYSTEM_NOISE_SYAWYAW: 0.001
+ 
+    EKF_COV_SENSOR_NOISE_X: 0.3
+    EKF_COV_SENSOR_NOISE_Y: 0.3
+
+    #System Noize 
+    EKF_WNOISE_X: 0.05 #0.05 
+    EKF_WNOISE_Y: 0.05 #0.05
+    EKF_WNOISE_YAW: 0.05 #0.05
+
+    #System Noize 
+    EKF_VNOISE_X: 0.64
+    EKF_VNOISE_Y: 0.64
+    EKF_VNOISE_YAW: 0.36
+
+    #GNSS
+    InitLatitude: 36.0828676000000002
+    initLongitude: 140.0769872999999848
+
+    #InitianPosition
+    Xinit: 0.0
+    Yinit: 0.0
+    #YawInit: 0.0
+    YawInit: 3.141592
