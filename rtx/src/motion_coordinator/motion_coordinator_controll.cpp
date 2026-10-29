@@ -23,7 +23,7 @@ int Motion_coordinator::controll_routine(void){
 
     if(manual_contol_ == true){
       if(l_manual_control == false) {
-        Voice(WAV_MANUAL_ON);
+        //Voice(WAV_MANUAL_ON);
       }
       //printf("MC: RefVel_manual_ = %lf current=%lf, count_wsum=%d\n",RefVel_manual_,current_,count_wsum);
 
@@ -32,11 +32,13 @@ int Motion_coordinator::controll_routine(void){
       }
     }
     else{
+      /*
       if(l_manual_control == true) {
         if(!flag_first) 
           Voice(WAV_MANUAL_OFF);
           //Voice(WAV_START);
       }
+          */
       //printf("MC: RefVel_ = %lf current=%lf, count_wsum=%d\n",RefVel_,current_,count_wsum);     
       if(fabs(Vel_-RefVel_) > 5.0 || RefVel_ < 0.1){
         if(current_ > 10 ) count_wsum++;
@@ -76,7 +78,7 @@ int Motion_coordinator::controll_routine(void){
 
     if(key_start_ <= 0) return 3;
     else if(key_start_==1){
-      Voice(WAV_START);
+      //Voice(WAV_START);
       key_start_ = 2;
       key_pose_ = 0;
       flag_pose_ = false;

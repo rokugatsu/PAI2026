@@ -645,7 +645,7 @@ Waypoint_planner::Waypoint_planner(): Node("waypoint_planner_node")
 
         current_wpt_ = dq_Waypoint_[0];
         cmd_initPosition_ = true;
-        Voice(WAV_SET_POSITION);
+        //Voice(WAV_SET_POSITION);
 
         geometry_msgs::msg::Pose pose;
 
@@ -755,14 +755,14 @@ void Waypoint_planner::cb_joypad(const sensor_msgs::msg::Joy::SharedPtr msg){
             F_MARK_ = fopen(str_mark_file_.c_str(),"a+");       
             fprintf(F_MARK_,"%lf %lf %lf \n",xGL_,yGL_,zGL_);  
 
-            Voice(WAV_POINT_MARK);
+            //Voice(WAV_POINT_MARK);
             fclose(F_MARK_);
         }
 
         if(msg->buttons[6] && l_msg.buttons[6]==0){ //back
             
             cmd_initPosition_ = true;
-            Voice(WAV_SET_POSITION);
+            //Voice(WAV_SET_POSITION);
 
             geometry_msgs::msg::Pose pose;
 
@@ -787,7 +787,7 @@ void Waypoint_planner::cb_joypad(const sensor_msgs::msg::Joy::SharedPtr msg){
 
     if(msg->buttons[1] > 0 && l_msg.buttons[1] == 0){ //Bボタン
         printf("B button, msg->buttons[1]=%d,l_msg.buttons[1]=%d\n",msg->buttons[1],l_msg.buttons[1]);
-        Voice(WAV_POINT_MARK);
+        //Voice(WAV_POINT_MARK);
     }
 
     l_msg = *msg;    
@@ -910,7 +910,7 @@ void Waypoint_planner::Edit_Waypoint(int k){
                         dq_Waypoint_[k].type);
             }
             fclose(F_NEW_WPT);
-            Voice(WAV_MARK);
+            //Voice(WAV_MARK);
         }
 
         cmd_save_= false;

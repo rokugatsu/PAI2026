@@ -20,7 +20,7 @@ int Motion_coordinator::SetBehavior(void){
 
     
     if(cur_wpt_.type == WPT_GOAL && flag_goal_ == false){
-      Voice(WAV_GOAL_IN);
+      //Voice(WAV_GOAL_IN);
       flag_goal_ = true;
     }
 
@@ -42,7 +42,7 @@ int Motion_coordinator::SetBehavior(void){
             //printf("Step_for_trafficLight_=%d, prev_Step_for_trafficLight_=%d\n",Step_for_trafficLight_,prev_Step_for_trafficLight_);
             
             if(Step_for_trafficLight_ == 0){
-                //Voice(WAV_STOP_TRAFFIC_SIGNAL);
+                ////Voice(WAV_STOP_TRAFFIC_SIGNAL);
 
                 flag_pose_ = true;
                 w_sum_=0;
@@ -56,7 +56,7 @@ int Motion_coordinator::SetBehavior(void){
                 if(trafficLight_red_ > 0){
                     Step_for_trafficLight_ = 2;
                     if(Step_for_trafficLight_ > prev_Step_for_trafficLight_ ){
-                        Voice(WAV_RED_TS);
+                        //Voice(WAV_RED_TS);
                         printf("TrafficLight:Red -- Stop --\n");
                     }
                 }
@@ -67,8 +67,8 @@ int Motion_coordinator::SetBehavior(void){
                     
                     // Go
                     Step_for_trafficLight_ = 3;
-                    //Voice(WAV_GREEN_TS);
-                    Voice(  WAV_GREEN_TS_RESTART);
+                    ////Voice(WAV_GREEN_TS);
+                    //Voice(  WAV_GREEN_TS_RESTART);
                     printf("TrafficLight:Green -- Restart --\n");
 
                     key_pose_ = 0;
@@ -121,7 +121,7 @@ int Motion_coordinator::SetBehavior(void){
                 NearestForwardObject_.poseCount     = ForwardObject_PoseCount_; //20
                 if(scene_ != 10) NearestForwardObject_.reverseCount 	= Reverse_Count_Default_; //20
                 
-                Voice(WAV_ENCOUNT_OBJECT);
+                //Voice(WAV_ENCOUNT_OBJECT);
             }
 
           

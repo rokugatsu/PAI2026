@@ -371,20 +371,20 @@ void Motion_coordinator::cb_scene(const robo_msgs::msg::Scene::SharedPtr msg) {
     if((scene_ != last_scene) && count <=0 && key_start_ > 0){
         if(scene_ == 10){
             flag_thanks = true;
-            Voice(WAV_SCENE10);
+            //Voice(WAV_SCENE10);
         }
-        else if(scene_ == 20) Voice(WAV_SCENE20);
-        else if(scene_ == 21) Voice(WAV_SCENE21);      
-        else if(scene_ == 30) Voice(WAV_SCENE30);
-        else if(scene_ == 40) Voice(WAV_SCENE40);
-        else Voice(WAV_SCENE99);
+        //else if(scene_ == 20) Voice(WAV_SCENE20);
+        //else if(scene_ == 21) Voice(WAV_SCENE21);
+        //else if(scene_ == 30) Voice(WAV_SCENE30);
+        //else if(scene_ == 40) Voice(WAV_SCENE40);
+        //else Voice(WAV_SCENE99);
         count = 30;
     }
 
     if(count-- <=0) count = 0;
 
     if(scene_ > 20 && count <= 0 && flag_thanks == true){
-        if(key_start_ > 0) Voice(WAV_THANKS );
+        //if(key_start_ > 0) //Voice(WAV_THANKS );
         flag_thanks = false;
     }
 
@@ -407,8 +407,8 @@ void Motion_coordinator::cb_localization(const geometry_msgs::msg::PoseWithCovar
     static double initTimeStamp_toSec = this->get_clock()->now().seconds();
     static int count_cb_vehicle = 0;
 
-    static bool flag_voice1 = true;
-    static bool flag_voice2 = true;
+    static bool flag_Voice1 = true;
+    static bool flag_Voice2 = true;
 
     passedTime_ = this->get_clock()->now().seconds() - initTimeStamp_toSec;
 
@@ -450,19 +450,19 @@ void Motion_coordinator::cb_localization(const geometry_msgs::msg::PoseWithCovar
                 dist_from_point_to_line);
 
         flag_ready_for_pose_ = false;
-        //Voice(WAV_ANZEN_KAKUNIN);
-        //Voice(WAV_ALIVE_VEHICLE);
+        ////Voice(WAV_ANZEN_KAKUNIN);
+        ////Voice(WAV_ALIVE_VEHICLE);
     
         flag_pose_ = false;
         if(flag_trafficLight_){
             key_pose_ = 2;
-            Voice(WAV_STOP_TRAFFIC_SIGNAL);
+            //Voice(WAV_STOP_TRAFFIC_SIGNAL);
             printf("MC: Stop for TrafficLight \n");            
         }
         else{
             key_pose_ = 1;
-            //Voice(WAV_ALIVE_VEHICLE);
-            Voice(WAV_ANZEN_KAKUNIN);
+            ////Voice(WAV_ALIVE_VEHICLE);
+            //Voice(WAV_ANZEN_KAKUNIN);
             printf("MC: Stop for Intersection \n"); 
         }
     }
@@ -510,7 +510,7 @@ void Motion_coordinator::cb_waypoint(robo_msgs::msg::Waypoint::SharedPtr msg){
 
     if(cur_wpt_.stop > 0 && flag_ready_for_pose_ == false){
      
-        Voice(WAV_STOP_NEXT);
+        //Voice(WAV_STOP_NEXT);
         
         flag_ready_for_pose_ = true;        
         
@@ -534,7 +534,7 @@ void Motion_coordinator::cb_waypoint(robo_msgs::msg::Waypoint::SharedPtr msg){
  
     if(cur_wpt_.type == WPT_GOAL){
         flag_goal_ = true;
-        Voice(WAV_GOAL_IN);
+        //Voice(WAV_GOAL_IN);
     }
 }
 
@@ -622,19 +622,19 @@ void Motion_coordinator::cb_joypad(const sensor_msgs::msg::Joy::SharedPtr msg){
     // else if(msg->buttons[2] > 0){ //Xボタン
     //     // Mark points
     //     flag_point_mark_ = true;
-    //     Voice(WAV_POINT_MARK);
+    //     //Voice(WAV_POINT_MARK);
     // }
 
     else if(msg->buttons[8] > 0 && l_msg.buttons[8] == 0){ //Logitechボタン
 
       if(manual_contol_ == false){
         manual_contol_ = true;
-        //Voice(WAV_MANUAL_ON);
+        ////Voice(WAV_MANUAL_ON);
         printf("MC: cb_interface:: MANUAL=ON\n ");
       }
       else{
         manual_contol_ = false;
-        //Voice(WAV_MANUAL_OFF);
+        ////Voice(WAV_MANUAL_OFF);
         printf("MC: cb_interface:: MANUAL=OFF\n ");
       }
 
@@ -742,7 +742,7 @@ void Motion_coordinator::cb_initialPose(const geometry_msgs::msg::Pose::SharedPt
       mcom_[1]=y;
       mcom_[2]=yawDeg;
 
-      Voice(WAV_SET_POSITION);
+      //Voice(WAV_SET_POSITION);
 
       printf("MC:SetPos:%lf, %lf, %lf \n",x,y,yawDeg);
       CarrotCommand(CARROT_SET_GL,3,mcom_);
@@ -751,7 +751,7 @@ void Motion_coordinator::cb_initialPose(const geometry_msgs::msg::Pose::SharedPt
 void Motion_coordinator::cb_vehicle(const robo_msgs::msg::Vehicle::SharedPtr msg) {
 
   // if(flag_asure_vehicle_){
-  //   Voice(WAV_ALIVE_VEHICLE);
+  //   //Voice(WAV_ALIVE_VEHICLE);
   //   flag_asure_vehicle_ = false;
   // }
     flag_vehicleActive_ = true;

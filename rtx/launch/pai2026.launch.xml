@@ -1,0 +1,39 @@
+<launch>
+    <!--set_parameter name="use_sim_time" value="true"/-->
+    <!--set_parameter name="use_sim_time" value="false"/-->
+    <arg name="use_sim_time" default="false"/>
+    <set_parameter name="use_sim_time" value="$(var use_sim_time)"/>
+
+    <arg name="rtx_param_file" default="$(find-pkg-share rtx)/config/rtx.param.yaml"/>
+
+    
+    <node pkg="rtx" exec="localizer_node" name="localizer_node">  
+        <param from="$(var rtx_param_file)"/>
+    </node>
+ 
+    <node pkg="rtx" exec="waypoint_planner_node" name="waypoint_planner_node" output="screen" > 
+        <param name="mode" value="0" /> 
+        <param from="$(var rtx_param_file)"/>
+    </node>
+
+    <node pkg="rtx" exec="motion_coordinator_node" name="motion_coordinator_node" >
+        <param name="runMode" value="0" />  
+        <param from="$(var rtx_param_file)"/>
+    </node>
+
+    <node pkg="joy" exec="joy_node" name="joy_node" output="screen"/>  
+    
+    <!-- Static TF from base link to laser -->
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="cloud_to_base_link" args="0 0 0 0 0 0 /cloud_matching /base_link" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_imu" args="0 0 0 0 0 0 /base_link /imu" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_urg_front" args="0.2 0 -0.56 0 0 0 /base_link /urg_front" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_urg_rear" args="-0.3 0 -0.56 3.141592654 0 0 /base_link /urg_rear" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_velodyne" args="-0.05 0 0.65 0 0 0 /base_link /velodyne" />
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_to_camera_tf" args="0.20 0.0 -0.53  0 0 0 base_link camera_link" output="screen"/>
+
+    <!-- rviz2-->
+    <arg name="rviz_config_path" default="$(find-pkg-share rtx)/launch/rtx.rviz" />  
+    <node pkg="rviz2" exec="rviz2" args="-d $(var rviz_config_path)">
+    </node> 
+    
+</launch>

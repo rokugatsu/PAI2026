@@ -58,7 +58,7 @@ int Motion_coordinator::PosingFunction(void){
 
     if(flag_pose_ == false){
         
-        Voice(WAV_POSE);
+        //Voice(WAV_POSE);
         Stop_Mild_Until_Vel(10,100);
         printf("<DestWP=%d:mode=%d>:Control_Thread(1.3):[一時停止]Carrot_Stop_Free()\n",cur_wpt_.num,control_mode_);
             
@@ -90,7 +90,7 @@ int Motion_coordinator::RestartFunction(void){
 
     w_sum_=0; //141104_2454
 
-    Voice(WAV_RESTART);
+    //Voice(WAV_RESTART);
 
     return 1;
 }
@@ -436,7 +436,7 @@ int Motion_coordinator::PoseControlFunction(void){
 
         if(passed_time > pose_time_){//POSE MODE 解除
 
-            Voice(WAV_RESTART);
+            //Voice(WAV_RESTART);
 
             Reverse(0.5,1000);
 
@@ -558,7 +558,7 @@ int Motion_coordinator::Reverse(double dist_refGL,int limit){
 
     printf("MC:Reverse(%4.2lf,%4.2lf,%4.2lf)\n",dstWP.xGL,dstWP.yGL,dstWP.qGL);
 
-    Voice(WAV_REVERSE);
+    //Voice(WAV_REVERSE);
 
     CarrotCommand(CARROT_STOP_FREE,0,mcom_);
 

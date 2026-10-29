@@ -66,14 +66,7 @@ include_directories(
   "/opt/ros/humble/include/tf2_eigen/tf2_eigen/"
   "/opt/ros/humble/include/nav_msgs/"
   "/opt/ros/humble/include/visualization_msgs/"
-  #"/opt/ros/humble/include/vision_msgs/"
-  #"/opt/ros/humble/include/rviz_common/"
-  "#/opt/ros/humble/opt/rviz_ogre_vendor/include/OGRE/"
-  #"/home/june/colcon_ws/src/ndt_omp_ros2/include/"
-  #"/home/june/colcon_ws/src/robo/src/common"
-  "/home/june/colcon_ws/src/common/"
-  #"/home/june/colcon_ws/install/robo_msgs/include/robo_msgs/robo_msgs"
-
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/common"
 )
 
 link_directories(
@@ -104,11 +97,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-#add_library(ndt_omp
-#  /home/june/colcon_ws/src/ndt_omp_ros2/src/pclomp/gicp_omp.cpp
-#  /home/june/colcon_ws/src/ndt_omp_ros2/src/pclomp/ndt_omp.cpp
-#  /home/june/colcon_ws/src/ndt_omp_ros2/src/pclomp/voxel_grid_covariance_omp.cpp
-#)
+
 
 #############################
 ## ROS 2 multigrid ndt_omp ##
@@ -124,41 +113,24 @@ endif()
 #  message(WARNING "OpenMP not found")
 #endif()
 
-add_executable(waypoint_planner_node src/waypoint_planner/waypoint_planner_node.cpp src/waypoint_planner/waypoint_planner_function.hpp src/waypoint_planner/wp_search_freespace.cpp src/waypoint_planner/waypoint_planner_AreaMap.cpp /home/june/colcon_ws/src/rtx/src/common/common_function.cpp)
+add_executable(waypoint_planner_node src/waypoint_planner/waypoint_planner_node.cpp src/waypoint_planner/waypoint_planner_function.hpp src/waypoint_planner/wp_search_freespace.cpp src/waypoint_planner/waypoint_planner_AreaMap.cpp src/common/common_function.cpp)
 ament_target_dependencies(waypoint_planner_node rclcpp geometry_msgs sensor_msgs nav_msgs pcl_conversions tf2_ros visualization_msgs robo_msgs pcl_msgs vision_msgs)
 target_link_libraries(waypoint_planner_node ${PCL_LIBRARIES} pcl_segmentation)
 
-add_executable(motion_coordinator_node src/motion_coordinator/motion_coordinator_node.cpp src/motion_coordinator/motion_controller_function.cpp src/motion_coordinator/motion_coordinator_controll.cpp src/motion_coordinator/motion_coordinator_planner.cpp /home/june/colcon_ws/src/rtx/src/common/common_function.cpp)
+add_executable(motion_coordinator_node src/motion_coordinator/motion_coordinator_node.cpp src/motion_coordinator/motion_controller_function.cpp src/motion_coordinator/motion_coordinator_controll.cpp src/motion_coordinator/motion_coordinator_planner.cpp src/common/common_function.cpp)
 ament_target_dependencies(motion_coordinator_node rclcpp geometry_msgs sensor_msgs nav_msgs pcl_conversions tf2_ros visualization_msgs robo_msgs pcl_msgs rviz_2d_overlay_msgs)
 target_link_libraries(motion_coordinator_node ${PCL_LIBRARIES})
-
-add_executable(rpi_udp_node src/rpi_udp/rpi_udp_node.cpp)
-ament_target_dependencies(rpi_udp_node rclcpp robo_msgs)
-target_link_libraries(rpi_udp_node)
 
 add_executable(localizer_node src/localizer/Localizer_node.cpp src/localizer/geo_pos_conv.cpp src/localizer/Localizer_AreaMapAccessor.cpp)
 ament_target_dependencies(localizer_node rclcpp geometry_msgs sensor_msgs nav_msgs pcl_conversions robo_msgs tf2_ros visualization_msgs pcl_msgs tf2_sensor_msgs)
 target_link_libraries(localizer_node ${PCL_LIBRARIES}  ${OpenCV_LIBS} ${YAML_CPP_LIBRARIES} pcl_segmentation)
 
-add_executable(loadsurface_detector_node src/loadsurface_detector/plane_extraction_node.cpp)
-ament_target_dependencies(loadsurface_detector_node rclcpp geometry_msgs sensor_msgs nav_msgs pcl_conversions robo_msgs tf2_ros visualization_msgs pcl_msgs tf2_sensor_msgs)
-target_link_libraries(loadsurface_detector_node ${PCL_LIBRARIES}  ${OpenCV_LIBS} ${YAML_CPP_LIBRARIES} pcl_segmentation)
-
-add_executable(pointcloud_map_transformer_node src/pointcloud_map_transformer_node/pointcloud_map_transformer_node.cpp)
-ament_target_dependencies(pointcloud_map_transformer_node rclcpp sensor_msgs geometry_msgs tf2 tf2_ros tf2_sensor_msgs)
-
-add_executable(polygon_map_transformer_node src/polygon_map_transformer_node/polygon_map_transformer_node.cpp)
-ament_target_dependencies(polygon_map_transformer_node rclcpp sensor_msgs geometry_msgs tf2 tf2_ros tf2_sensor_msgs)
 
 install(TARGETS
     #waypoint_server_node
     waypoint_planner_node
     motion_coordinator_node
-    rpi_udp_node
     localizer_node
-    loadsurface_detector_node
-    pointcloud_map_transformer_node
-    polygon_map_transformer_node
     DESTINATION lib/${PROJECT_NAME}
 )
 

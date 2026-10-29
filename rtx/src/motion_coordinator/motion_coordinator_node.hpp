@@ -103,7 +103,7 @@
 
 #include "motion_coordinator_const.h"
 #include "CarrotCommandID.h"
-#include "RTX_Sound.hpp"
+//#include "RTX_Sound.hpp"
 
 #define COM_ARY_NUM 10
 

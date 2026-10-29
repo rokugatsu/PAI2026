@@ -1,0 +1,13 @@
+# ROS 2 / colcon build artifacts
+/build/
+/install/
+/log/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor and temporary files
+*.swp
+*~
+*.backup
